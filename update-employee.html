@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>SPW-HRMS</title>
+
+    <!-- Custom fonts for this template-->
+    <link href="vendor/fontawesome-free/css/all.min.css" rel="stylesheet" type="text/css">
+    <link
+        href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i"
+        rel="stylesheet">
+
+    <!-- Custom styles for this template-->
+    <link href="css/sb-admin-2.min.css" rel="stylesheet">
+
+</head>
+
+<body id="page-top">
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <div id="nav-placeholder"></div>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <div id="top-placeholder"></div>
+                <!-- End of Topbar -->
+
+                <!-- Begin Page Content -->
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                        <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+                    </div>
+
+                    <!-- Content Row -->
+                    <section class="vh-100 gradient-custom">
+                        <div class="container">
+                            <div class="row justify-content-left align-items-left">
+                                <div class="col-12 col-lg-9 col-xl-7">
+                                    <div class="card-body p-4 p-md-5">
+                                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5" id="userid">Update Emplopyee</h3>
+                                        <form id="addemp">
+
+                                            <div class="row">
+                                                <div class="col-md-6 mb-4 pb-2">
+
+                                                    <div class="form-outline">
+                                                        <input type="text" id="name"
+                                                            class="form-control form-control-lg" />
+                                                        <label class="form-label" for="name">Name</label>
+                                                    </div>
+
+                                                    <div class="form-outline">
+                                                        <input type="date" id="dob"
+                                                            class="form-control form-control-lg" />
+                                                        <label class="form-label" for="dob">Date of Birth</label>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-6 mb-4 pb-2">
+
+                                                    <div class="form-outline">
+                                                        <input type="email" id="email"
+                                                            class="form-control form-control-lg" disabled/>
+                                                        <label class="form-label" for="email">Email</label>
+                                                    </div>
+
+                                                </div>
+                                                <div class="col-md-6 mb-4 pb-2">
+
+                                                    <div class="form-outline">
+                                                        <input type="tel" id="phone"
+                                                            class="form-control form-control-lg" />
+                                                        <label class="form-label" for="phone">Phone Number</label>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                            <div class="row">
+                                                <div class="col-md-6 mb-4 pb-2">
+                                                    <div class="form-outline">
+                                                        <select name="desig" id="desig"
+                                                            class="form-control form-control-lg">
+                                                            <option value="hr">HR</option>
+                                                            <option value="employee">Employee</option>
+                                                            <option value="admin">Admin</option>
+                                                        </select>
+                                                        <label class="form-label" for="desig">Designation</label>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 mb-4 pb-2">
+                                                    <div class="form-outline">
+                                                        <input type="number" id="salary"
+                                                            class="form-control form-control-lg" />
+                                                        <label class="form-label" for="salary">Salary</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="mt-4 pt-2">
+                                                <input class="btn btn-primary btn-lg" type="button" value="Update"
+                                                    onClick="updateemp()" />
+                                            </div>
+
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+
+                </div>
+                <!-- End of Page Wrapper -->
+
+                <!-- Scroll to Top Button-->
+                <a class="scroll-to-top rounded" href="#page-top">
+                    <i class="fas fa-angle-up"></i>
+                </a>
+
+                <!-- Bootstrap core JavaScript-->
+                <script src="vendor/jquery/jquery.min.js"></script>
+                <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+                <!-- Core plugin JavaScript-->
+                <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
+
+                <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+                <script type="text/javascript">
+                    function getCookie(name) {
+                        const value = `; ${document.cookie}`;
+                        const parts = value.split(`; ${name}=`);
+                        if (parts.length === 2) return parts.pop().split(';').shift();
+                    }
+
+                    function updateemp() {
+                        var reqdata = {
+                            userid: getCookie("updateemp"),
+                            name: $('#name').val(),
+                            desig: $('#desig').val(),
+                            salary: $('#salary').val(),
+                            dob: $('#dob').val(),
+                            phone: $('#phone').val()
+                        };
+                        $.ajax({
+                            url: 'https://spw-backend.herokuapp.com/api/v1/protected/update',
+                            type: 'POST',
+                            beforeSend: function (xhr) {
+                                xhr.setRequestHeader('Authorization', getCookie("tok"));
+                            },
+                            data: reqdata,
+                            dataType: 'json',
+                            async: false,
+                            success: function (response) {
+                                location.reload();
+                            },
+                            error: function (response) {
+                                window.location.href = "404.html";
+                            }
+                        });
+                    }
+
+                    $.ajax({
+                        url: 'https://spw-backend.herokuapp.com/api/v1/protected/viewemp',
+                        type: 'POST',
+                        beforeSend: function (xhr) {
+                            xhr.setRequestHeader('Authorization', getCookie("tok"));
+                        },
+                        data: { userid: getCookie("updateemp") },
+                        dataType: 'json',
+                        async: false,
+                        success: function (response) {
+                            document.getElementById("userid").innerHTML = `Employee ID ${response.data[0].userid}`;
+                            document.getElementById("name").value = `${response.data[0].name}`;
+                            document.getElementById("dob").value = response.data[0].dob.substring(0, 10);
+                            document.getElementById("email").value = response.data[0].email;
+                            document.getElementById("phone").value = response.data[0].phone;
+                            document.getElementById("salary").value = response.data[0].salary;
+                            $(`#desig`).val(response.data[0].desig);
+                        },
+                        error: function (response) {
+                            window.location.href = "404.html";
+                        }
+                    });
+
+                    $(function () {
+                        $("#nav-placeholder").load("navbar.html");
+                        $("#top-placeholder").load("topbar.html");
+                    });
+
+                    function logout() {
+                        var cookies = document.cookie.split(";");
+                        for (var i = 0; i < cookies.length; i++) {
+                            var cookie = cookies[i];
+                            var eqPos = cookie.indexOf("=");
+                            var name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+                            document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT";
+                        }
+                        window.location.href = "index.html";
+                    }
+                </script>
+
+                <!-- Custom scripts for all pages-->
+                <script src="js/sb-admin-2.min.js"></script>
+
+                <!-- Page level plugins -->
+                <script src="vendor/chart.js/Chart.min.js"></script>
+
+                <!-- Page level custom scripts -->
+                <script src="js/demo/chart-area-demo.js"></script>
+                <script src="js/demo/chart-pie-demo.js"></script>
+
+</body>
+
+</html>
